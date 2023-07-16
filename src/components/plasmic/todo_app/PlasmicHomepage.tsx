@@ -67,13 +67,16 @@ export const PlasmicHomepage__ArgProps = new Array<ArgPropType>();
 
 export type PlasmicHomepage__OverridesType = {
   root?: p.Flex<"div">;
+  column?: p.Flex<"div">;
+  freeBox?: p.Flex<"div">;
   navigationBar?: p.Flex<typeof NavigationBar>;
-  link?: p.Flex<"a">;
   completed?: p.Flex<"a">;
   form?: p.Flex<"form">;
   task?: p.Flex<typeof AntdTextArea>;
   button?: p.Flex<typeof AntdButton>;
-  table?: p.Flex<typeof RichTable>;
+  incompleteTable?: p.Flex<typeof RichTable>;
+  completeTable?: p.Flex<typeof RichTable>;
+  allTable?: p.Flex<typeof RichTable>;
 };
 
 export interface DefaultHomepageProps {
@@ -121,7 +124,7 @@ function PlasmicHomepage__RenderFunc(props: {
         onMutate: p.generateOnMutateForSpec("value", AntdTextArea_Helpers)
       },
       {
-        path: "table.selectedRowKey",
+        path: "incompleteTable.selectedRowKey",
         type: "private",
         variableType: "text",
         initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
@@ -129,7 +132,7 @@ function PlasmicHomepage__RenderFunc(props: {
         onMutate: p.generateOnMutateForSpec("selectedRowKey", RichTable_Helpers)
       },
       {
-        path: "table.selectedRow",
+        path: "incompleteTable.selectedRow",
         type: "private",
         variableType: "object",
         initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
@@ -137,7 +140,7 @@ function PlasmicHomepage__RenderFunc(props: {
         onMutate: p.generateOnMutateForSpec("selectedRow", RichTable_Helpers)
       },
       {
-        path: "table.selectedRows",
+        path: "incompleteTable.selectedRows",
         type: "private",
         variableType: "array",
         initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
@@ -145,7 +148,7 @@ function PlasmicHomepage__RenderFunc(props: {
         onMutate: p.generateOnMutateForSpec("selectedRows", RichTable_Helpers)
       },
       {
-        path: "table.selectedRowKeys",
+        path: "incompleteTable.selectedRowKeys",
         type: "private",
         variableType: "array",
         initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
@@ -154,6 +157,94 @@ function PlasmicHomepage__RenderFunc(props: {
           "selectedRowKeys",
           RichTable_Helpers
         )
+      },
+      {
+        path: "tableFilter",
+        type: "private",
+        variableType: "boolean",
+        initFunc: ({ $props, $state, $queries, $ctx }) => false
+      },
+      {
+        path: "completeTableFilter",
+        type: "private",
+        variableType: "boolean",
+        initFunc: ({ $props, $state, $queries, $ctx }) => false
+      },
+      {
+        path: "completeTable.selectedRowKey",
+        type: "private",
+        variableType: "text",
+        initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
+
+        onMutate: p.generateOnMutateForSpec("selectedRowKey", RichTable_Helpers)
+      },
+      {
+        path: "completeTable.selectedRow",
+        type: "private",
+        variableType: "object",
+        initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
+
+        onMutate: p.generateOnMutateForSpec("selectedRow", RichTable_Helpers)
+      },
+      {
+        path: "completeTable.selectedRows",
+        type: "private",
+        variableType: "array",
+        initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
+
+        onMutate: p.generateOnMutateForSpec("selectedRows", RichTable_Helpers)
+      },
+      {
+        path: "completeTable.selectedRowKeys",
+        type: "private",
+        variableType: "array",
+        initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
+
+        onMutate: p.generateOnMutateForSpec(
+          "selectedRowKeys",
+          RichTable_Helpers
+        )
+      },
+      {
+        path: "allTable.selectedRowKey",
+        type: "private",
+        variableType: "text",
+        initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
+
+        onMutate: p.generateOnMutateForSpec("selectedRowKey", RichTable_Helpers)
+      },
+      {
+        path: "allTable.selectedRow",
+        type: "private",
+        variableType: "object",
+        initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
+
+        onMutate: p.generateOnMutateForSpec("selectedRow", RichTable_Helpers)
+      },
+      {
+        path: "allTable.selectedRows",
+        type: "private",
+        variableType: "array",
+        initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
+
+        onMutate: p.generateOnMutateForSpec("selectedRows", RichTable_Helpers)
+      },
+      {
+        path: "allTable.selectedRowKeys",
+        type: "private",
+        variableType: "array",
+        initFunc: ({ $props, $state, $queries, $ctx }) => undefined,
+
+        onMutate: p.generateOnMutateForSpec(
+          "selectedRowKeys",
+          RichTable_Helpers
+        )
+      },
+      {
+        path: "incompleteTableFilter",
+        type: "private",
+        variableType: "boolean",
+        initFunc: ({ $props, $state, $queries, $ctx }) => true
       }
     ],
     [$props, $ctx, $refs]
@@ -169,14 +260,62 @@ function PlasmicHomepage__RenderFunc(props: {
   const mutate = swrMutate;
 
   const new$Queries = {
-    query: usePlasmicDataOp(
+    allData: usePlasmicDataOp(
       (() => {
         try {
           return {
             sourceId: "p7grtHiSaQSVmhAoysUCZR",
-            opId: "2fdf332b-ffaf-4f4b-9cd0-ca2db0da6c9f",
+            opId: "d77a9f35-d048-4f3f-84a8-65bb154c2afc",
             userArgs: {},
             cacheKey: "plasmic.$.1LD0Ybdr5.$.",
+            invalidatedKeys: null,
+            roleId: null
+          };
+        } catch (e) {
+          if (
+            e instanceof TypeError ||
+            e?.plasmicType === "PlasmicUndefinedDataError"
+          ) {
+            return undefined;
+          } else {
+            throw e;
+          }
+        }
+      })()
+    ),
+
+    incompleteData: usePlasmicDataOp(
+      (() => {
+        try {
+          return {
+            sourceId: "p7grtHiSaQSVmhAoysUCZR",
+            opId: "fca6e1cd-fd5a-4653-a8c3-1efcf724a2a7",
+            userArgs: {},
+            cacheKey: "plasmic.$.auMj6xNba.$.",
+            invalidatedKeys: null,
+            roleId: null
+          };
+        } catch (e) {
+          if (
+            e instanceof TypeError ||
+            e?.plasmicType === "PlasmicUndefinedDataError"
+          ) {
+            return undefined;
+          } else {
+            throw e;
+          }
+        }
+      })()
+    ),
+
+    completeData: usePlasmicDataOp(
+      (() => {
+        try {
+          return {
+            sourceId: "p7grtHiSaQSVmhAoysUCZR",
+            opId: "dc7dd3e2-2b7f-42b7-85f7-4e0e9f0710e9",
+            userArgs: {},
+            cacheKey: "plasmic.$.Veqz-yv3U.$.",
             invalidatedKeys: null,
             roleId: null
           };
@@ -200,721 +339,1810 @@ function PlasmicHomepage__RenderFunc(props: {
   return (
     <React.Fragment>
       <div className={projectcss.plasmic_page_wrapper}>
-        <div
-          data-plasmic-name={"root"}
-          data-plasmic-override={overrides.root}
-          data-plasmic-root={true}
-          data-plasmic-for-node={forNode}
-          className={classNames(
-            projectcss.all,
-            projectcss.root_reset,
-            projectcss.plasmic_default_styles,
-            projectcss.plasmic_mixins,
-            projectcss.plasmic_tokens,
-            plasmic_antd_5_hostless_css.plasmic_tokens,
-            plasmic_plasmic_rich_components_css.plasmic_tokens,
-            sty.root
-          )}
-        >
-          <NavigationBar
-            data-plasmic-name={"navigationBar"}
-            data-plasmic-override={overrides.navigationBar}
-            brand={
-              <div
-                className={classNames(
-                  projectcss.all,
-                  projectcss.__wab_text,
-                  sty.text__tp4Jg
-                )}
-              >
-                {"ToDo List"}
-              </div>
-            }
-            className={classNames("__wab_instance", sty.navigationBar)}
-            closeButton={
-              <p.PlasmicImg
-                alt={""}
-                className={classNames(sty.img__am9ZC)}
-                displayHeight={"auto" as const}
-                displayMaxHeight={"none" as const}
-                displayMaxWidth={"none" as const}
-                displayMinHeight={"0" as const}
-                displayMinWidth={"0" as const}
-                displayWidth={"auto" as const}
-                src={"https://static1.plasmic.app/close.svg" as const}
-              />
-            }
-            itemsGap={8 as const}
-            menuItems={
-              <React.Fragment>
-                <a
-                  data-plasmic-name={"link"}
-                  data-plasmic-override={overrides.link}
-                  className={classNames(
-                    projectcss.all,
-                    projectcss.a,
-                    projectcss.__wab_text,
-                    sty.link
-                  )}
-                  onClick={async event => {
-                    const $steps = {};
-                    $steps["airtableGetList"] = true
-                      ? (() => {
-                          const actionArgs = {
-                            dataOp: __wrapUserFunction(
-                              {
-                                type: "InteractionArgLoc",
-                                actionName: "dataSourceOp",
-                                interactionUuid: "F-F-cxtTy",
-                                componentUuid: "jSrioS_Omt",
-                                argName: "dataOp"
-                              },
-                              () => ({
-                                sourceId: "p7grtHiSaQSVmhAoysUCZR",
-                                opId: "7e307cc3-2b32-4c11-accb-674f38e18b4a",
-                                userArgs: {},
-                                cacheKey: null,
-                                invalidatedKeys: null,
-                                roleId: null
-                              })
-                            )
-                          };
-                          return __wrapUserFunction(
-                            {
-                              type: "InteractionLoc",
-                              actionName: "dataSourceOp",
-                              interactionUuid: "F-F-cxtTy",
-                              componentUuid: "jSrioS_Omt"
-                            },
-                            () =>
-                              (async ({ dataOp, continueOnError }) => {
-                                try {
-                                  const response = await executePlasmicDataOp(
-                                    dataOp,
-                                    {
-                                      userAuthToken:
-                                        dataSourcesCtx?.userAuthToken,
-                                      user: dataSourcesCtx?.user
-                                    }
-                                  );
-                                  if (
-                                    dataOp.invalidatedKeys &&
-                                    dataOp.invalidatedKeys.find(
-                                      key => key === "plasmic_refresh_all"
-                                    )
-                                  ) {
-                                    await Promise.all(
-                                      Array.from(cache.keys()).map(async key =>
-                                        mutate(key)
-                                      )
-                                    );
-
-                                    return response;
-                                  }
-                                  if (dataOp.invalidatedKeys) {
-                                    await Promise.all(
-                                      dataOp.invalidatedKeys.map(
-                                        async invalidateKey =>
-                                          Promise.all(
-                                            Array.from(cache.keys()).map(
-                                              async key => {
-                                                if (
-                                                  typeof key === "string" &&
-                                                  key.includes(
-                                                    `.$.${invalidateKey}.$.`
-                                                  )
-                                                ) {
-                                                  return mutate(key);
-                                                }
-                                                return Promise.resolve();
-                                              }
-                                            )
-                                          )
-                                      )
-                                    );
-                                  }
-                                  return response;
-                                } catch (e) {
-                                  if (!continueOnError) {
-                                    throw e;
-                                  }
-                                  return e;
-                                }
-                              })?.apply(null, [actionArgs]),
-                            actionArgs
-                          );
-                        })()
-                      : undefined;
-                    if (
-                      typeof $steps["airtableGetList"] === "object" &&
-                      typeof $steps["airtableGetList"].then === "function"
-                    ) {
-                      $steps["airtableGetList"] = await __wrapUserPromise(
-                        {
-                          type: "InteractionLoc",
-                          actionName: "dataSourceOp",
-                          interactionUuid: "F-F-cxtTy",
-                          componentUuid: "jSrioS_Omt"
-                        },
-                        $steps["airtableGetList"]
-                      );
-                    }
-                  }}
-                >
-                  {"Current List"}
-                </a>
-                <a
-                  data-plasmic-name={"completed"}
-                  data-plasmic-override={overrides.completed}
-                  className={classNames(
-                    projectcss.all,
-                    projectcss.a,
-                    projectcss.__wab_text,
-                    sty.completed
-                  )}
-                  onClick={async event => {
-                    const $steps = {};
-                    $steps["airtableGetList"] = true
-                      ? (() => {
-                          const actionArgs = {
-                            dataOp: __wrapUserFunction(
-                              {
-                                type: "InteractionArgLoc",
-                                actionName: "dataSourceOp",
-                                interactionUuid: "IiQo9pIei",
-                                componentUuid: "jSrioS_Omt",
-                                argName: "dataOp"
-                              },
-                              () => ({
-                                sourceId: "p7grtHiSaQSVmhAoysUCZR",
-                                opId: "699a407b-5eaa-458a-a07d-9521c6096881",
-                                userArgs: {},
-                                cacheKey: null,
-                                invalidatedKeys: null,
-                                roleId: null
-                              })
-                            )
-                          };
-                          return __wrapUserFunction(
-                            {
-                              type: "InteractionLoc",
-                              actionName: "dataSourceOp",
-                              interactionUuid: "IiQo9pIei",
-                              componentUuid: "jSrioS_Omt"
-                            },
-                            () =>
-                              (async ({ dataOp, continueOnError }) => {
-                                try {
-                                  const response = await executePlasmicDataOp(
-                                    dataOp,
-                                    {
-                                      userAuthToken:
-                                        dataSourcesCtx?.userAuthToken,
-                                      user: dataSourcesCtx?.user
-                                    }
-                                  );
-                                  if (
-                                    dataOp.invalidatedKeys &&
-                                    dataOp.invalidatedKeys.find(
-                                      key => key === "plasmic_refresh_all"
-                                    )
-                                  ) {
-                                    await Promise.all(
-                                      Array.from(cache.keys()).map(async key =>
-                                        mutate(key)
-                                      )
-                                    );
-
-                                    return response;
-                                  }
-                                  if (dataOp.invalidatedKeys) {
-                                    await Promise.all(
-                                      dataOp.invalidatedKeys.map(
-                                        async invalidateKey =>
-                                          Promise.all(
-                                            Array.from(cache.keys()).map(
-                                              async key => {
-                                                if (
-                                                  typeof key === "string" &&
-                                                  key.includes(
-                                                    `.$.${invalidateKey}.$.`
-                                                  )
-                                                ) {
-                                                  return mutate(key);
-                                                }
-                                                return Promise.resolve();
-                                              }
-                                            )
-                                          )
-                                      )
-                                    );
-                                  }
-                                  return response;
-                                } catch (e) {
-                                  if (!continueOnError) {
-                                    throw e;
-                                  }
-                                  return e;
-                                }
-                              })?.apply(null, [actionArgs]),
-                            actionArgs
-                          );
-                        })()
-                      : undefined;
-                    if (
-                      typeof $steps["airtableGetList"] === "object" &&
-                      typeof $steps["airtableGetList"].then === "function"
-                    ) {
-                      $steps["airtableGetList"] = await __wrapUserPromise(
-                        {
-                          type: "InteractionLoc",
-                          actionName: "dataSourceOp",
-                          interactionUuid: "IiQo9pIei",
-                          componentUuid: "jSrioS_Omt"
-                        },
-                        $steps["airtableGetList"]
-                      );
-                    }
-                  }}
-                >
-                  {"Completed"}
-                </a>
-              </React.Fragment>
-            }
-            openButton={
-              <p.PlasmicImg
-                alt={""}
-                className={classNames(sty.img__kj285)}
-                displayHeight={"auto" as const}
-                displayMaxHeight={"none" as const}
-                displayMaxWidth={"none" as const}
-                displayMinHeight={"0" as const}
-                displayMinWidth={"0" as const}
-                displayWidth={"auto" as const}
-                src={"https://static1.plasmic.app/menu.svg" as const}
-              />
-            }
-            responsiveBreakpoint={768 as const}
-          />
-
-          <form
-            data-plasmic-name={"form"}
-            data-plasmic-override={overrides.form}
-            action={``}
-            className={classNames(projectcss.all, sty.form)}
-            method={"post" as const}
+        {true ? (
+          <div
+            data-plasmic-name={"root"}
+            data-plasmic-override={overrides.root}
+            data-plasmic-root={true}
+            data-plasmic-for-node={forNode}
+            className={classNames(
+              projectcss.all,
+              projectcss.root_reset,
+              projectcss.plasmic_default_styles,
+              projectcss.plasmic_mixins,
+              projectcss.plasmic_tokens,
+              plasmic_antd_5_hostless_css.plasmic_tokens,
+              plasmic_plasmic_rich_components_css.plasmic_tokens,
+              sty.root
+            )}
           >
-            {(() => {
-              const child$Props = {
-                className: classNames("__wab_instance", sty.task),
-                onChange: p.generateStateOnChangePropForCodeComponents(
-                  $state,
-                  "value",
-                  ["task", "value"],
-                  AntdTextArea_Helpers
-                ),
-                placeholder: "Please enter a task..." as const,
-                value: p.generateStateValueProp($state, ["task", "value"])
-              };
-              p.initializeCodeComponentStates(
-                $state,
-                [
-                  {
-                    name: "value",
-                    plasmicStateName: "task.value"
-                  }
-                ],
-                [],
-                AntdTextArea_Helpers ?? {},
-                child$Props
-              );
-
-              return (
-                <AntdTextArea
-                  data-plasmic-name={"task"}
-                  data-plasmic-override={overrides.task}
-                  {...child$Props}
-                />
-              );
-            })()}
-            <AntdButton
-              data-plasmic-name={"button"}
-              data-plasmic-override={overrides.button}
-              className={classNames("__wab_instance", sty.button)}
-              onClick={async () => {
-                const $steps = {};
-                $steps["airtableCreate"] = true
-                  ? (() => {
-                      const actionArgs = {
-                        dataOp: __wrapUserFunction(
-                          {
-                            type: "InteractionArgLoc",
-                            actionName: "dataSourceOp",
-                            interactionUuid: "Wf7L5pIOt",
-                            componentUuid: "jSrioS_Omt",
-                            argName: "dataOp"
-                          },
-                          () => ({
-                            sourceId: "p7grtHiSaQSVmhAoysUCZR",
-                            opId: "c0311fbb-092a-43cf-bb8d-1b49580d09fa",
-                            userArgs: {
-                              variables: [$state.task.value]
-                            },
-                            cacheKey: null,
-                            invalidatedKeys: ["plasmic_refresh_all"],
-                            roleId: null
-                          })
-                        )
-                      };
-                      return __wrapUserFunction(
-                        {
-                          type: "InteractionLoc",
-                          actionName: "dataSourceOp",
-                          interactionUuid: "Wf7L5pIOt",
-                          componentUuid: "jSrioS_Omt"
-                        },
-                        () =>
-                          (async ({ dataOp, continueOnError }) => {
-                            try {
-                              const response = await executePlasmicDataOp(
-                                dataOp,
-                                {
-                                  userAuthToken: dataSourcesCtx?.userAuthToken,
-                                  user: dataSourcesCtx?.user
-                                }
-                              );
-                              if (
-                                dataOp.invalidatedKeys &&
-                                dataOp.invalidatedKeys.find(
-                                  key => key === "plasmic_refresh_all"
-                                )
-                              ) {
-                                await Promise.all(
-                                  Array.from(cache.keys()).map(async key =>
-                                    mutate(key)
-                                  )
-                                );
-
-                                return response;
-                              }
-                              if (dataOp.invalidatedKeys) {
-                                await Promise.all(
-                                  dataOp.invalidatedKeys.map(
-                                    async invalidateKey =>
-                                      Promise.all(
-                                        Array.from(cache.keys()).map(
-                                          async key => {
-                                            if (
-                                              typeof key === "string" &&
-                                              key.includes(
-                                                `.$.${invalidateKey}.$.`
-                                              )
-                                            ) {
-                                              return mutate(key);
-                                            }
-                                            return Promise.resolve();
-                                          }
-                                        )
-                                      )
-                                  )
-                                );
-                              }
-                              return response;
-                            } catch (e) {
-                              if (!continueOnError) {
-                                throw e;
-                              }
-                              return e;
-                            }
-                          })?.apply(null, [actionArgs]),
-                        actionArgs
-                      );
-                    })()
-                  : undefined;
-                if (
-                  typeof $steps["airtableCreate"] === "object" &&
-                  typeof $steps["airtableCreate"].then === "function"
-                ) {
-                  $steps["airtableCreate"] = await __wrapUserPromise(
-                    {
-                      type: "InteractionLoc",
-                      actionName: "dataSourceOp",
-                      interactionUuid: "Wf7L5pIOt",
-                      componentUuid: "jSrioS_Omt"
-                    },
-                    $steps["airtableCreate"]
-                  );
-                }
-              }}
+            <div
+              data-plasmic-name={"column"}
+              data-plasmic-override={overrides.column}
+              className={classNames(projectcss.all, sty.column)}
             >
               <div
-                className={classNames(
-                  projectcss.all,
-                  projectcss.__wab_text,
-                  sty.text__m5Jlr
-                )}
+                data-plasmic-name={"freeBox"}
+                data-plasmic-override={overrides.freeBox}
+                className={classNames(projectcss.all, sty.freeBox)}
               >
-                {"Click to add task"}
-              </div>
-            </AntdButton>
-          </form>
-          {(() => {
-            const child$Props = {
-              canSelectRows: "none" as const,
-              className: classNames("__wab_instance", sty.table),
-              data: (() => {
-                try {
-                  return $queries.query;
-                } catch (e) {
-                  if (
-                    e instanceof TypeError ||
-                    e?.plasmicType === "PlasmicUndefinedDataError"
-                  ) {
-                    return undefined;
+                <NavigationBar
+                  data-plasmic-name={"navigationBar"}
+                  data-plasmic-override={overrides.navigationBar}
+                  brand={
+                    <div
+                      className={classNames(
+                        projectcss.all,
+                        projectcss.__wab_text,
+                        sty.text__tp4Jg
+                      )}
+                    >
+                      {"ToDo List"}
+                    </div>
                   }
-                  throw e;
-                }
-              })(),
-              fields: (() => {
-                const __composite = [
-                  {
-                    key: "__airtable_id",
-                    fieldId: "__airtable_id",
-                    isHidden: null
-                  },
-                  {
-                    key: "Number",
-                    fieldId: "Number",
-                    dataType: null,
-                    maximumFractionDigits: null
-                  },
-                  {
-                    key: "Description",
-                    fieldId: "Description",
-                    dataType: null
-                  },
-                  {
-                    key: "Completed",
-                    fieldId: "Completed",
-                    dataType: null,
-                    showAs: null,
-                    title: null
+                  className={classNames("__wab_instance", sty.navigationBar)}
+                  closeButton={
+                    <p.PlasmicImg
+                      alt={""}
+                      className={classNames(sty.img__am9ZC)}
+                      displayHeight={"auto" as const}
+                      displayMaxHeight={"none" as const}
+                      displayMaxWidth={"none" as const}
+                      displayMinHeight={"0" as const}
+                      displayMinWidth={"0" as const}
+                      displayWidth={"auto" as const}
+                      src={"https://static1.plasmic.app/close.svg" as const}
+                    />
                   }
-                ];
-                __composite["0"]["isHidden"] = true;
-                __composite["1"]["dataType"] = "number";
-                __composite["1"]["maximumFractionDigits"] = 0;
-                __composite["2"]["dataType"] = "string";
-                __composite["3"]["dataType"] = "boolean";
-                __composite["3"]["showAs"] = "switch";
-                __composite["3"]["title"] = "Completed";
-                return __composite;
-              })(),
+                  itemsGap={8 as const}
+                  menuItems={
+                    <React.Fragment>
+                      {true ? (
+                        <a
+                          className={classNames(
+                            projectcss.all,
+                            projectcss.a,
+                            projectcss.__wab_text,
+                            sty.link___02ROg
+                          )}
+                          onClick={async event => {
+                            const $steps = {};
+                            $steps["updateTableFilter"] = true
+                              ? (() => {
+                                  const actionArgs = {
+                                    variable: __wrapUserFunction(
+                                      {
+                                        type: "InteractionArgLoc",
+                                        actionName: "updateVariable",
+                                        interactionUuid: "7EULTY9lN",
+                                        componentUuid: "jSrioS_Omt",
+                                        argName: "variable"
+                                      },
+                                      () => ({
+                                        objRoot: $state,
+                                        variablePath: ["tableFilter"]
+                                      })
+                                    ),
+                                    operation: __wrapUserFunction(
+                                      {
+                                        type: "InteractionArgLoc",
+                                        actionName: "updateVariable",
+                                        interactionUuid: "7EULTY9lN",
+                                        componentUuid: "jSrioS_Omt",
+                                        argName: "operation"
+                                      },
+                                      () => 0
+                                    ),
+                                    value: __wrapUserFunction(
+                                      {
+                                        type: "InteractionArgLoc",
+                                        actionName: "updateVariable",
+                                        interactionUuid: "7EULTY9lN",
+                                        componentUuid: "jSrioS_Omt",
+                                        argName: "value"
+                                      },
+                                      () => false
+                                    )
+                                  };
+                                  return __wrapUserFunction(
+                                    {
+                                      type: "InteractionLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "7EULTY9lN",
+                                      componentUuid: "jSrioS_Omt"
+                                    },
+                                    () =>
+                                      (({
+                                        variable,
+                                        value,
+                                        startIndex,
+                                        deleteCount
+                                      }) => {
+                                        if (!variable) {
+                                          return;
+                                        }
+                                        const { objRoot, variablePath } =
+                                          variable;
 
-              onRowClick: async (rowKey, row, event) => {
-                const $steps = {};
-                $steps["airtableUpdateById"] = true
-                  ? (() => {
-                      const actionArgs = {
-                        dataOp: __wrapUserFunction(
-                          {
-                            type: "InteractionArgLoc",
-                            actionName: "dataSourceOp",
-                            interactionUuid: "l17r28CmS",
-                            componentUuid: "jSrioS_Omt",
-                            argName: "dataOp"
-                          },
-                          () => ({
-                            sourceId: "p7grtHiSaQSVmhAoysUCZR",
-                            opId: "2bd5a585-149e-4f74-800d-abf8ad4c04ed",
-                            userArgs: {
-                              id: [rowKey],
-                              variables: [
-                                String(
-                                  $queries.query.data.reduce(e => {
-                                    console.log({
-                                      airtable_id: e.__airtable_id,
-                                      rowKey: rowKey
-                                    });
-                                    if (e.__airtable_id == rowKey) {
-                                      console.log(e.Completed);
-                                      // e.Completed = e.Completed === "false" ? "false" : "true"
-                                      console.log(e.Completed);
-                                      return e;
-                                    } else {
-                                      console.log("return statement");
-                                      return e;
+                                        p.set(objRoot, variablePath, value);
+                                        return value;
+                                      })?.apply(null, [actionArgs]),
+                                    actionArgs
+                                  );
+                                })()
+                              : undefined;
+                            if (
+                              typeof $steps["updateTableFilter"] === "object" &&
+                              typeof $steps["updateTableFilter"].then ===
+                                "function"
+                            ) {
+                              $steps["updateTableFilter"] =
+                                await __wrapUserPromise(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "updateVariable",
+                                    interactionUuid: "7EULTY9lN",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  $steps["updateTableFilter"]
+                                );
+                            }
+                            $steps["updateCompleteTableFilter"] = true
+                              ? (() => {
+                                  const actionArgs = {
+                                    variable: __wrapUserFunction(
+                                      {
+                                        type: "InteractionArgLoc",
+                                        actionName: "updateVariable",
+                                        interactionUuid: "ugqRswF1K",
+                                        componentUuid: "jSrioS_Omt",
+                                        argName: "variable"
+                                      },
+                                      () => ({
+                                        objRoot: $state,
+                                        variablePath: ["completeTableFilter"]
+                                      })
+                                    ),
+                                    operation: __wrapUserFunction(
+                                      {
+                                        type: "InteractionArgLoc",
+                                        actionName: "updateVariable",
+                                        interactionUuid: "ugqRswF1K",
+                                        componentUuid: "jSrioS_Omt",
+                                        argName: "operation"
+                                      },
+                                      () => 0
+                                    ),
+                                    value: __wrapUserFunction(
+                                      {
+                                        type: "InteractionArgLoc",
+                                        actionName: "updateVariable",
+                                        interactionUuid: "ugqRswF1K",
+                                        componentUuid: "jSrioS_Omt",
+                                        argName: "value"
+                                      },
+                                      () => false
+                                    )
+                                  };
+                                  return __wrapUserFunction(
+                                    {
+                                      type: "InteractionLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "ugqRswF1K",
+                                      componentUuid: "jSrioS_Omt"
+                                    },
+                                    () =>
+                                      (({
+                                        variable,
+                                        value,
+                                        startIndex,
+                                        deleteCount
+                                      }) => {
+                                        if (!variable) {
+                                          return;
+                                        }
+                                        const { objRoot, variablePath } =
+                                          variable;
+
+                                        p.set(objRoot, variablePath, value);
+                                        return value;
+                                      })?.apply(null, [actionArgs]),
+                                    actionArgs
+                                  );
+                                })()
+                              : undefined;
+                            if (
+                              typeof $steps["updateCompleteTableFilter"] ===
+                                "object" &&
+                              typeof $steps["updateCompleteTableFilter"]
+                                .then === "function"
+                            ) {
+                              $steps["updateCompleteTableFilter"] =
+                                await __wrapUserPromise(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "updateVariable",
+                                    interactionUuid: "ugqRswF1K",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  $steps["updateCompleteTableFilter"]
+                                );
+                            }
+                            $steps["updateIncompleteTableFilter"] = true
+                              ? (() => {
+                                  const actionArgs = {
+                                    variable: __wrapUserFunction(
+                                      {
+                                        type: "InteractionArgLoc",
+                                        actionName: "updateVariable",
+                                        interactionUuid: "53frqOIwm",
+                                        componentUuid: "jSrioS_Omt",
+                                        argName: "variable"
+                                      },
+                                      () => ({
+                                        objRoot: $state,
+                                        variablePath: ["incompleteTableFilter"]
+                                      })
+                                    ),
+                                    operation: __wrapUserFunction(
+                                      {
+                                        type: "InteractionArgLoc",
+                                        actionName: "updateVariable",
+                                        interactionUuid: "53frqOIwm",
+                                        componentUuid: "jSrioS_Omt",
+                                        argName: "operation"
+                                      },
+                                      () => 0
+                                    ),
+                                    value: __wrapUserFunction(
+                                      {
+                                        type: "InteractionArgLoc",
+                                        actionName: "updateVariable",
+                                        interactionUuid: "53frqOIwm",
+                                        componentUuid: "jSrioS_Omt",
+                                        argName: "value"
+                                      },
+                                      () => false
+                                    )
+                                  };
+                                  return __wrapUserFunction(
+                                    {
+                                      type: "InteractionLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "53frqOIwm",
+                                      componentUuid: "jSrioS_Omt"
+                                    },
+                                    () =>
+                                      (({
+                                        variable,
+                                        value,
+                                        startIndex,
+                                        deleteCount
+                                      }) => {
+                                        if (!variable) {
+                                          return;
+                                        }
+                                        const { objRoot, variablePath } =
+                                          variable;
+
+                                        p.set(objRoot, variablePath, value);
+                                        return value;
+                                      })?.apply(null, [actionArgs]),
+                                    actionArgs
+                                  );
+                                })()
+                              : undefined;
+                            if (
+                              typeof $steps["updateIncompleteTableFilter"] ===
+                                "object" &&
+                              typeof $steps["updateIncompleteTableFilter"]
+                                .then === "function"
+                            ) {
+                              $steps["updateIncompleteTableFilter"] =
+                                await __wrapUserPromise(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "updateVariable",
+                                    interactionUuid: "53frqOIwm",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  $steps["updateIncompleteTableFilter"]
+                                );
+                            }
+                          }}
+                        >
+                          {"All"}
+                        </a>
+                      ) : null}
+                      <a
+                        className={classNames(
+                          projectcss.all,
+                          projectcss.a,
+                          projectcss.__wab_text,
+                          sty.link__kuXxG
+                        )}
+                        onClick={async event => {
+                          const $steps = {};
+                          $steps["updateIncompleteTableFilter"] = true
+                            ? (() => {
+                                const actionArgs = {
+                                  variable: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "pejrjHM3Y",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "variable"
+                                    },
+                                    () => ({
+                                      objRoot: $state,
+                                      variablePath: ["incompleteTableFilter"]
+                                    })
+                                  ),
+                                  operation: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "pejrjHM3Y",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "operation"
+                                    },
+                                    () => 0
+                                  ),
+                                  value: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "pejrjHM3Y",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "value"
+                                    },
+                                    () => true
+                                  )
+                                };
+                                return __wrapUserFunction(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "updateVariable",
+                                    interactionUuid: "pejrjHM3Y",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  () =>
+                                    (({
+                                      variable,
+                                      value,
+                                      startIndex,
+                                      deleteCount
+                                    }) => {
+                                      if (!variable) {
+                                        return;
+                                      }
+                                      const { objRoot, variablePath } =
+                                        variable;
+
+                                      p.set(objRoot, variablePath, value);
+                                      return value;
+                                    })?.apply(null, [actionArgs]),
+                                  actionArgs
+                                );
+                              })()
+                            : undefined;
+                          if (
+                            typeof $steps["updateIncompleteTableFilter"] ===
+                              "object" &&
+                            typeof $steps["updateIncompleteTableFilter"]
+                              .then === "function"
+                          ) {
+                            $steps["updateIncompleteTableFilter"] =
+                              await __wrapUserPromise(
+                                {
+                                  type: "InteractionLoc",
+                                  actionName: "updateVariable",
+                                  interactionUuid: "pejrjHM3Y",
+                                  componentUuid: "jSrioS_Omt"
+                                },
+                                $steps["updateIncompleteTableFilter"]
+                              );
+                          }
+                          $steps["updateCompleteTableFilter"] = true
+                            ? (() => {
+                                const actionArgs = {
+                                  variable: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "vy9tgJO-y",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "variable"
+                                    },
+                                    () => ({
+                                      objRoot: $state,
+                                      variablePath: ["completeTableFilter"]
+                                    })
+                                  ),
+                                  operation: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "vy9tgJO-y",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "operation"
+                                    },
+                                    () => 0
+                                  ),
+                                  value: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "vy9tgJO-y",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "value"
+                                    },
+                                    () => false
+                                  )
+                                };
+                                return __wrapUserFunction(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "updateVariable",
+                                    interactionUuid: "vy9tgJO-y",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  () =>
+                                    (({
+                                      variable,
+                                      value,
+                                      startIndex,
+                                      deleteCount
+                                    }) => {
+                                      if (!variable) {
+                                        return;
+                                      }
+                                      const { objRoot, variablePath } =
+                                        variable;
+
+                                      p.set(objRoot, variablePath, value);
+                                      return value;
+                                    })?.apply(null, [actionArgs]),
+                                  actionArgs
+                                );
+                              })()
+                            : undefined;
+                          if (
+                            typeof $steps["updateCompleteTableFilter"] ===
+                              "object" &&
+                            typeof $steps["updateCompleteTableFilter"].then ===
+                              "function"
+                          ) {
+                            $steps["updateCompleteTableFilter"] =
+                              await __wrapUserPromise(
+                                {
+                                  type: "InteractionLoc",
+                                  actionName: "updateVariable",
+                                  interactionUuid: "vy9tgJO-y",
+                                  componentUuid: "jSrioS_Omt"
+                                },
+                                $steps["updateCompleteTableFilter"]
+                              );
+                          }
+                          $steps["updateTableFilter"] = true
+                            ? (() => {
+                                const actionArgs = {
+                                  variable: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "3ZcQkTGTK",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "variable"
+                                    },
+                                    () => ({
+                                      objRoot: $state,
+                                      variablePath: ["tableFilter"]
+                                    })
+                                  ),
+                                  operation: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "3ZcQkTGTK",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "operation"
+                                    },
+                                    () => 0
+                                  ),
+                                  value: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "3ZcQkTGTK",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "value"
+                                    },
+                                    () => true
+                                  )
+                                };
+                                return __wrapUserFunction(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "updateVariable",
+                                    interactionUuid: "3ZcQkTGTK",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  () =>
+                                    (({
+                                      variable,
+                                      value,
+                                      startIndex,
+                                      deleteCount
+                                    }) => {
+                                      if (!variable) {
+                                        return;
+                                      }
+                                      const { objRoot, variablePath } =
+                                        variable;
+
+                                      p.set(objRoot, variablePath, value);
+                                      return value;
+                                    })?.apply(null, [actionArgs]),
+                                  actionArgs
+                                );
+                              })()
+                            : undefined;
+                          if (
+                            typeof $steps["updateTableFilter"] === "object" &&
+                            typeof $steps["updateTableFilter"].then ===
+                              "function"
+                          ) {
+                            $steps["updateTableFilter"] =
+                              await __wrapUserPromise(
+                                {
+                                  type: "InteractionLoc",
+                                  actionName: "updateVariable",
+                                  interactionUuid: "3ZcQkTGTK",
+                                  componentUuid: "jSrioS_Omt"
+                                },
+                                $steps["updateTableFilter"]
+                              );
+                          }
+                        }}
+                      >
+                        {"Incomplete"}
+                      </a>
+                      <a
+                        data-plasmic-name={"completed"}
+                        data-plasmic-override={overrides.completed}
+                        className={classNames(
+                          projectcss.all,
+                          projectcss.a,
+                          projectcss.__wab_text,
+                          sty.completed
+                        )}
+                        onClick={async event => {
+                          const $steps = {};
+                          $steps["updateTableFilter"] = true
+                            ? (() => {
+                                const actionArgs = {
+                                  variable: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "phEP1iqeX",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "variable"
+                                    },
+                                    () => ({
+                                      objRoot: $state,
+                                      variablePath: ["tableFilter"]
+                                    })
+                                  ),
+                                  operation: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "phEP1iqeX",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "operation"
+                                    },
+                                    () => 0
+                                  ),
+                                  value: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "phEP1iqeX",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "value"
+                                    },
+                                    () => true
+                                  )
+                                };
+                                return __wrapUserFunction(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "updateVariable",
+                                    interactionUuid: "phEP1iqeX",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  () =>
+                                    (({
+                                      variable,
+                                      value,
+                                      startIndex,
+                                      deleteCount
+                                    }) => {
+                                      if (!variable) {
+                                        return;
+                                      }
+                                      const { objRoot, variablePath } =
+                                        variable;
+
+                                      p.set(objRoot, variablePath, value);
+                                      return value;
+                                    })?.apply(null, [actionArgs]),
+                                  actionArgs
+                                );
+                              })()
+                            : undefined;
+                          if (
+                            typeof $steps["updateTableFilter"] === "object" &&
+                            typeof $steps["updateTableFilter"].then ===
+                              "function"
+                          ) {
+                            $steps["updateTableFilter"] =
+                              await __wrapUserPromise(
+                                {
+                                  type: "InteractionLoc",
+                                  actionName: "updateVariable",
+                                  interactionUuid: "phEP1iqeX",
+                                  componentUuid: "jSrioS_Omt"
+                                },
+                                $steps["updateTableFilter"]
+                              );
+                          }
+                          $steps["updateIncompleteTableFilter"] = true
+                            ? (() => {
+                                const actionArgs = {
+                                  variable: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "J6dG1zXl8",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "variable"
+                                    },
+                                    () => ({
+                                      objRoot: $state,
+                                      variablePath: ["incompleteTableFilter"]
+                                    })
+                                  ),
+                                  operation: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "J6dG1zXl8",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "operation"
+                                    },
+                                    () => 0
+                                  ),
+                                  value: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "J6dG1zXl8",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "value"
+                                    },
+                                    () => false
+                                  )
+                                };
+                                return __wrapUserFunction(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "updateVariable",
+                                    interactionUuid: "J6dG1zXl8",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  () =>
+                                    (({
+                                      variable,
+                                      value,
+                                      startIndex,
+                                      deleteCount
+                                    }) => {
+                                      if (!variable) {
+                                        return;
+                                      }
+                                      const { objRoot, variablePath } =
+                                        variable;
+
+                                      p.set(objRoot, variablePath, value);
+                                      return value;
+                                    })?.apply(null, [actionArgs]),
+                                  actionArgs
+                                );
+                              })()
+                            : undefined;
+                          if (
+                            typeof $steps["updateIncompleteTableFilter"] ===
+                              "object" &&
+                            typeof $steps["updateIncompleteTableFilter"]
+                              .then === "function"
+                          ) {
+                            $steps["updateIncompleteTableFilter"] =
+                              await __wrapUserPromise(
+                                {
+                                  type: "InteractionLoc",
+                                  actionName: "updateVariable",
+                                  interactionUuid: "J6dG1zXl8",
+                                  componentUuid: "jSrioS_Omt"
+                                },
+                                $steps["updateIncompleteTableFilter"]
+                              );
+                          }
+                          $steps["updateCompleteTableFilter"] = true
+                            ? (() => {
+                                const actionArgs = {
+                                  variable: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "SqWJM2M3H",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "variable"
+                                    },
+                                    () => ({
+                                      objRoot: $state,
+                                      variablePath: ["completeTableFilter"]
+                                    })
+                                  ),
+                                  operation: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "SqWJM2M3H",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "operation"
+                                    },
+                                    () => 0
+                                  ),
+                                  value: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "updateVariable",
+                                      interactionUuid: "SqWJM2M3H",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "value"
+                                    },
+                                    () => true
+                                  )
+                                };
+                                return __wrapUserFunction(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "updateVariable",
+                                    interactionUuid: "SqWJM2M3H",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  () =>
+                                    (({
+                                      variable,
+                                      value,
+                                      startIndex,
+                                      deleteCount
+                                    }) => {
+                                      if (!variable) {
+                                        return;
+                                      }
+                                      const { objRoot, variablePath } =
+                                        variable;
+
+                                      p.set(objRoot, variablePath, value);
+                                      return value;
+                                    })?.apply(null, [actionArgs]),
+                                  actionArgs
+                                );
+                              })()
+                            : undefined;
+                          if (
+                            typeof $steps["updateCompleteTableFilter"] ===
+                              "object" &&
+                            typeof $steps["updateCompleteTableFilter"].then ===
+                              "function"
+                          ) {
+                            $steps["updateCompleteTableFilter"] =
+                              await __wrapUserPromise(
+                                {
+                                  type: "InteractionLoc",
+                                  actionName: "updateVariable",
+                                  interactionUuid: "SqWJM2M3H",
+                                  componentUuid: "jSrioS_Omt"
+                                },
+                                $steps["updateCompleteTableFilter"]
+                              );
+                          }
+                        }}
+                      >
+                        {"Complete"}
+                      </a>
+                    </React.Fragment>
+                  }
+                  openButton={
+                    <p.PlasmicImg
+                      alt={""}
+                      className={classNames(sty.img__kj285)}
+                      displayHeight={"auto" as const}
+                      displayMaxHeight={"none" as const}
+                      displayMaxWidth={"none" as const}
+                      displayMinHeight={"0" as const}
+                      displayMinWidth={"0" as const}
+                      displayWidth={"auto" as const}
+                      src={"https://static1.plasmic.app/menu.svg" as const}
+                    />
+                  }
+                  responsiveBreakpoint={768 as const}
+                />
+
+                <form
+                  data-plasmic-name={"form"}
+                  data-plasmic-override={overrides.form}
+                  action={``}
+                  className={classNames(projectcss.all, sty.form)}
+                  method={"post" as const}
+                >
+                  {(() => {
+                    const child$Props = {
+                      className: classNames("__wab_instance", sty.task),
+                      onChange: p.generateStateOnChangePropForCodeComponents(
+                        $state,
+                        "value",
+                        ["task", "value"],
+                        AntdTextArea_Helpers
+                      ),
+                      placeholder: "Please enter a task..." as const,
+                      value: p.generateStateValueProp($state, ["task", "value"])
+                    };
+                    p.initializeCodeComponentStates(
+                      $state,
+                      [
+                        {
+                          name: "value",
+                          plasmicStateName: "task.value"
+                        }
+                      ],
+                      [],
+                      AntdTextArea_Helpers ?? {},
+                      child$Props
+                    );
+
+                    return (
+                      <AntdTextArea
+                        data-plasmic-name={"task"}
+                        data-plasmic-override={overrides.task}
+                        {...child$Props}
+                      />
+                    );
+                  })()}
+                  <AntdButton
+                    data-plasmic-name={"button"}
+                    data-plasmic-override={overrides.button}
+                    className={classNames("__wab_instance", sty.button)}
+                    onClick={async () => {
+                      const $steps = {};
+                      $steps["airtableCreate"] = true
+                        ? (() => {
+                            const actionArgs = {
+                              dataOp: __wrapUserFunction(
+                                {
+                                  type: "InteractionArgLoc",
+                                  actionName: "dataSourceOp",
+                                  interactionUuid: "Wf7L5pIOt",
+                                  componentUuid: "jSrioS_Omt",
+                                  argName: "dataOp"
+                                },
+                                () => ({
+                                  sourceId: "p7grtHiSaQSVmhAoysUCZR",
+                                  opId: "c0311fbb-092a-43cf-bb8d-1b49580d09fa",
+                                  userArgs: {
+                                    variables: [$state.task.value]
+                                  },
+                                  cacheKey: null,
+                                  invalidatedKeys: ["plasmic_refresh_all"],
+                                  roleId: null
+                                })
+                              )
+                            };
+                            return __wrapUserFunction(
+                              {
+                                type: "InteractionLoc",
+                                actionName: "dataSourceOp",
+                                interactionUuid: "Wf7L5pIOt",
+                                componentUuid: "jSrioS_Omt"
+                              },
+                              () =>
+                                (async ({ dataOp, continueOnError }) => {
+                                  try {
+                                    const response = await executePlasmicDataOp(
+                                      dataOp,
+                                      {
+                                        userAuthToken:
+                                          dataSourcesCtx?.userAuthToken,
+                                        user: dataSourcesCtx?.user
+                                      }
+                                    );
+                                    if (
+                                      dataOp.invalidatedKeys &&
+                                      dataOp.invalidatedKeys.find(
+                                        key => key === "plasmic_refresh_all"
+                                      )
+                                    ) {
+                                      await Promise.all(
+                                        Array.from(cache.keys()).map(
+                                          async key => mutate(key)
+                                        )
+                                      );
+
+                                      return response;
                                     }
-                                  }).Completed
-                                )
-                              ]
+                                    if (dataOp.invalidatedKeys) {
+                                      await Promise.all(
+                                        dataOp.invalidatedKeys.map(
+                                          async invalidateKey =>
+                                            Promise.all(
+                                              Array.from(cache.keys()).map(
+                                                async key => {
+                                                  if (
+                                                    typeof key === "string" &&
+                                                    key.includes(
+                                                      `.$.${invalidateKey}.$.`
+                                                    )
+                                                  ) {
+                                                    return mutate(key);
+                                                  }
+                                                  return Promise.resolve();
+                                                }
+                                              )
+                                            )
+                                        )
+                                      );
+                                    }
+                                    return response;
+                                  } catch (e) {
+                                    if (!continueOnError) {
+                                      throw e;
+                                    }
+                                    return e;
+                                  }
+                                })?.apply(null, [actionArgs]),
+                              actionArgs
+                            );
+                          })()
+                        : undefined;
+                      if (
+                        typeof $steps["airtableCreate"] === "object" &&
+                        typeof $steps["airtableCreate"].then === "function"
+                      ) {
+                        $steps["airtableCreate"] = await __wrapUserPromise(
+                          {
+                            type: "InteractionLoc",
+                            actionName: "dataSourceOp",
+                            interactionUuid: "Wf7L5pIOt",
+                            componentUuid: "jSrioS_Omt"
+                          },
+                          $steps["airtableCreate"]
+                        );
+                      }
+                    }}
+                  >
+                    <div
+                      className={classNames(
+                        projectcss.all,
+                        projectcss.__wab_text,
+                        sty.text__m5Jlr
+                      )}
+                    >
+                      {"Click to add task"}
+                    </div>
+                  </AntdButton>
+                </form>
+                {(() => {
+                  try {
+                    return $state.incompleteTableFilter;
+                  } catch (e) {
+                    if (
+                      e instanceof TypeError ||
+                      e?.plasmicType === "PlasmicUndefinedDataError"
+                    ) {
+                      return false;
+                    }
+                    throw e;
+                  }
+                })()
+                  ? (() => {
+                      const child$Props = {
+                        canSelectRows: "click" as const,
+                        className: classNames(
+                          "__wab_instance",
+                          sty.incompleteTable
+                        ),
+                        data: (() => {
+                          try {
+                            return $queries.incompleteData.data;
+                          } catch (e) {
+                            if (
+                              e instanceof TypeError ||
+                              e?.plasmicType === "PlasmicUndefinedDataError"
+                            ) {
+                              return undefined;
+                            }
+                            throw e;
+                          }
+                        })(),
+                        fields: (() => {
+                          const __composite = [
+                            {
+                              key: "__airtable_id",
+                              fieldId: "__airtable_id",
+                              isHidden: null
                             },
-                            cacheKey: null,
-                            invalidatedKeys: ["plasmic_refresh_all"],
-                            roleId: null
-                          })
+                            {
+                              key: "Number",
+                              fieldId: "Number",
+                              dataType: null,
+                              maximumFractionDigits: null
+                            },
+                            {
+                              key: "Description",
+                              fieldId: "Description",
+                              dataType: null
+                            },
+                            {
+                              key: "Completed",
+                              fieldId: "Completed",
+                              dataType: null,
+                              showAs: null,
+                              title: null
+                            }
+                          ];
+                          __composite["0"]["isHidden"] = true;
+                          __composite["1"]["dataType"] = "number";
+                          __composite["1"]["maximumFractionDigits"] = 0;
+                          __composite["2"]["dataType"] = "string";
+                          __composite["3"]["dataType"] = "boolean";
+                          __composite["3"]["showAs"] = "switch";
+                          __composite["3"]["title"] = "Completed";
+                          return __composite;
+                        })(),
+
+                        onRowClick: async (rowKey, row, event) => {
+                          const $steps = {};
+                          $steps["airtableUpdateById"] = true
+                            ? (() => {
+                                const actionArgs = {
+                                  dataOp: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "dataSourceOp",
+                                      interactionUuid: "l17r28CmS",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "dataOp"
+                                    },
+                                    () => ({
+                                      sourceId: "p7grtHiSaQSVmhAoysUCZR",
+                                      opId: "7fc410f2-9815-4e5d-a10c-32a22eaa26fc",
+                                      userArgs: {
+                                        id: [
+                                          $state.incompleteTable.selectedRow
+                                            .__airtable_id
+                                        ],
+                                        variables: ["true"]
+                                      },
+                                      cacheKey: null,
+                                      invalidatedKeys: ["plasmic_refresh_all"],
+                                      roleId: null
+                                    })
+                                  )
+                                };
+                                return __wrapUserFunction(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "dataSourceOp",
+                                    interactionUuid: "l17r28CmS",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  () =>
+                                    (async ({ dataOp, continueOnError }) => {
+                                      try {
+                                        const response =
+                                          await executePlasmicDataOp(dataOp, {
+                                            userAuthToken:
+                                              dataSourcesCtx?.userAuthToken,
+                                            user: dataSourcesCtx?.user
+                                          });
+                                        if (
+                                          dataOp.invalidatedKeys &&
+                                          dataOp.invalidatedKeys.find(
+                                            key => key === "plasmic_refresh_all"
+                                          )
+                                        ) {
+                                          await Promise.all(
+                                            Array.from(cache.keys()).map(
+                                              async key => mutate(key)
+                                            )
+                                          );
+
+                                          return response;
+                                        }
+                                        if (dataOp.invalidatedKeys) {
+                                          await Promise.all(
+                                            dataOp.invalidatedKeys.map(
+                                              async invalidateKey =>
+                                                Promise.all(
+                                                  Array.from(cache.keys()).map(
+                                                    async key => {
+                                                      if (
+                                                        typeof key ===
+                                                          "string" &&
+                                                        key.includes(
+                                                          `.$.${invalidateKey}.$.`
+                                                        )
+                                                      ) {
+                                                        return mutate(key);
+                                                      }
+                                                      return Promise.resolve();
+                                                    }
+                                                  )
+                                                )
+                                            )
+                                          );
+                                        }
+                                        return response;
+                                      } catch (e) {
+                                        if (!continueOnError) {
+                                          throw e;
+                                        }
+                                        return e;
+                                      }
+                                    })?.apply(null, [actionArgs]),
+                                  actionArgs
+                                );
+                              })()
+                            : undefined;
+                          if (
+                            typeof $steps["airtableUpdateById"] === "object" &&
+                            typeof $steps["airtableUpdateById"].then ===
+                              "function"
+                          ) {
+                            $steps["airtableUpdateById"] =
+                              await __wrapUserPromise(
+                                {
+                                  type: "InteractionLoc",
+                                  actionName: "dataSourceOp",
+                                  interactionUuid: "l17r28CmS",
+                                  componentUuid: "jSrioS_Omt"
+                                },
+                                $steps["airtableUpdateById"]
+                              );
+                          }
+                        },
+                        onRowSelectionChanged: async (...eventArgs) => {
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRowKey",
+                            ["incompleteTable", "selectedRowKey"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRow",
+                            ["incompleteTable", "selectedRow"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRows",
+                            ["incompleteTable", "selectedRows"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRowKeys",
+                            ["incompleteTable", "selectedRowKeys"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                        },
+                        pageSize: 10 as const,
+                        pagination: false,
+                        rowActions: [],
+                        rowKey: (() => {
+                          try {
+                            return $state.incompleteTable.selectedRow;
+                          } catch (e) {
+                            if (
+                              e instanceof TypeError ||
+                              e?.plasmicType === "PlasmicUndefinedDataError"
+                            ) {
+                              return undefined;
+                            }
+                            throw e;
+                          }
+                        })(),
+                        scopeClassName: sty["incompleteTable__instance"],
+                        selectedRowKey: p.generateStateValueProp($state, [
+                          "incompleteTable",
+                          "selectedRowKey"
+                        ]),
+                        selectedRowKeys: p.generateStateValueProp($state, [
+                          "incompleteTable",
+                          "selectedRowKeys"
+                        ]),
+                        themeResetClassName: classNames(
+                          projectcss.root_reset,
+                          projectcss.root_reset_tags,
+                          projectcss.plasmic_default_styles,
+                          projectcss.plasmic_mixins,
+                          projectcss.plasmic_tokens,
+                          plasmic_antd_5_hostless_css.plasmic_tokens,
+                          plasmic_plasmic_rich_components_css.plasmic_tokens
                         )
                       };
-                      return __wrapUserFunction(
-                        {
-                          type: "InteractionLoc",
-                          actionName: "dataSourceOp",
-                          interactionUuid: "l17r28CmS",
-                          componentUuid: "jSrioS_Omt"
-                        },
-                        () =>
-                          (async ({ dataOp, continueOnError }) => {
-                            try {
-                              const response = await executePlasmicDataOp(
-                                dataOp,
-                                {
-                                  userAuthToken: dataSourcesCtx?.userAuthToken,
-                                  user: dataSourcesCtx?.user
-                                }
-                              );
-                              if (
-                                dataOp.invalidatedKeys &&
-                                dataOp.invalidatedKeys.find(
-                                  key => key === "plasmic_refresh_all"
-                                )
-                              ) {
-                                await Promise.all(
-                                  Array.from(cache.keys()).map(async key =>
-                                    mutate(key)
-                                  )
-                                );
+                      p.initializeCodeComponentStates(
+                        $state,
+                        [
+                          {
+                            name: "selectedRowKey",
+                            plasmicStateName: "incompleteTable.selectedRowKey"
+                          },
+                          {
+                            name: "selectedRow",
+                            plasmicStateName: "incompleteTable.selectedRow"
+                          },
+                          {
+                            name: "selectedRows",
+                            plasmicStateName: "incompleteTable.selectedRows"
+                          },
+                          {
+                            name: "selectedRowKeys",
+                            plasmicStateName: "incompleteTable.selectedRowKeys"
+                          }
+                        ],
+                        [],
+                        RichTable_Helpers ?? {},
+                        child$Props
+                      );
 
-                                return response;
-                              }
-                              if (dataOp.invalidatedKeys) {
-                                await Promise.all(
-                                  dataOp.invalidatedKeys.map(
-                                    async invalidateKey =>
-                                      Promise.all(
-                                        Array.from(cache.keys()).map(
-                                          async key => {
-                                            if (
-                                              typeof key === "string" &&
-                                              key.includes(
-                                                `.$.${invalidateKey}.$.`
-                                              )
-                                            ) {
-                                              return mutate(key);
-                                            }
-                                            return Promise.resolve();
-                                          }
-                                        )
-                                      )
-                                  )
-                                );
-                              }
-                              return response;
-                            } catch (e) {
-                              if (!continueOnError) {
-                                throw e;
-                              }
-                              return e;
-                            }
-                          })?.apply(null, [actionArgs]),
-                        actionArgs
+                      return (
+                        <RichTable
+                          data-plasmic-name={"incompleteTable"}
+                          data-plasmic-override={overrides.incompleteTable}
+                          {...child$Props}
+                        />
                       );
                     })()
-                  : undefined;
-                if (
-                  typeof $steps["airtableUpdateById"] === "object" &&
-                  typeof $steps["airtableUpdateById"].then === "function"
-                ) {
-                  $steps["airtableUpdateById"] = await __wrapUserPromise(
-                    {
-                      type: "InteractionLoc",
-                      actionName: "dataSourceOp",
-                      interactionUuid: "l17r28CmS",
-                      componentUuid: "jSrioS_Omt"
-                    },
-                    $steps["airtableUpdateById"]
-                  );
-                }
-              },
-              onRowSelectionChanged: async (...eventArgs) => {
-                p.generateStateOnChangePropForCodeComponents(
-                  $state,
-                  "selectedRowKey",
-                  ["table", "selectedRowKey"],
-                  RichTable_Helpers
-                ).apply(null, eventArgs);
-                p.generateStateOnChangePropForCodeComponents(
-                  $state,
-                  "selectedRow",
-                  ["table", "selectedRow"],
-                  RichTable_Helpers
-                ).apply(null, eventArgs);
-                p.generateStateOnChangePropForCodeComponents(
-                  $state,
-                  "selectedRows",
-                  ["table", "selectedRows"],
-                  RichTable_Helpers
-                ).apply(null, eventArgs);
-                p.generateStateOnChangePropForCodeComponents(
-                  $state,
-                  "selectedRowKeys",
-                  ["table", "selectedRowKeys"],
-                  RichTable_Helpers
-                ).apply(null, eventArgs);
-              },
-              rowActions: [],
-              scopeClassName: sty["table__instance"],
-              selectedRowKey: p.generateStateValueProp($state, [
-                "table",
-                "selectedRowKey"
-              ]),
-              selectedRowKeys: p.generateStateValueProp($state, [
-                "table",
-                "selectedRowKeys"
-              ]),
-              themeResetClassName: classNames(
-                projectcss.root_reset,
-                projectcss.root_reset_tags,
-                projectcss.plasmic_default_styles,
-                projectcss.plasmic_mixins,
-                projectcss.plasmic_tokens,
-                plasmic_antd_5_hostless_css.plasmic_tokens,
-                plasmic_plasmic_rich_components_css.plasmic_tokens
-              )
-            };
-            p.initializeCodeComponentStates(
-              $state,
-              [
-                {
-                  name: "selectedRowKey",
-                  plasmicStateName: "table.selectedRowKey"
-                },
-                {
-                  name: "selectedRow",
-                  plasmicStateName: "table.selectedRow"
-                },
-                {
-                  name: "selectedRows",
-                  plasmicStateName: "table.selectedRows"
-                },
-                {
-                  name: "selectedRowKeys",
-                  plasmicStateName: "table.selectedRowKeys"
-                }
-              ],
-              [],
-              RichTable_Helpers ?? {},
-              child$Props
-            );
+                  : null}
+                {(() => {
+                  try {
+                    return $state.completeTableFilter;
+                  } catch (e) {
+                    if (
+                      e instanceof TypeError ||
+                      e?.plasmicType === "PlasmicUndefinedDataError"
+                    ) {
+                      return true;
+                    }
+                    throw e;
+                  }
+                })()
+                  ? (() => {
+                      const child$Props = {
+                        canSelectRows: "click" as const,
+                        className: classNames(
+                          "__wab_instance",
+                          sty.completeTable
+                        ),
+                        data: (() => {
+                          try {
+                            return $queries.completeData.data;
+                          } catch (e) {
+                            if (
+                              e instanceof TypeError ||
+                              e?.plasmicType === "PlasmicUndefinedDataError"
+                            ) {
+                              return undefined;
+                            }
+                            throw e;
+                          }
+                        })(),
+                        fields: (() => {
+                          const __composite = [
+                            {
+                              key: "__airtable_id",
+                              fieldId: "__airtable_id",
+                              isHidden: null
+                            },
+                            {
+                              key: "Number",
+                              fieldId: "Number",
+                              dataType: null,
+                              maximumFractionDigits: null
+                            },
+                            {
+                              key: "Description",
+                              fieldId: "Description",
+                              dataType: null
+                            },
+                            {
+                              key: "Completed",
+                              fieldId: "Completed",
+                              dataType: null,
+                              showAs: null,
+                              title: null
+                            }
+                          ];
+                          __composite["0"]["isHidden"] = true;
+                          __composite["1"]["dataType"] = "number";
+                          __composite["1"]["maximumFractionDigits"] = 0;
+                          __composite["2"]["dataType"] = "string";
+                          __composite["3"]["dataType"] = "boolean";
+                          __composite["3"]["showAs"] = "switch";
+                          __composite["3"]["title"] = "Completed";
+                          return __composite;
+                        })(),
 
-            return (
-              <RichTable
-                data-plasmic-name={"table"}
-                data-plasmic-override={overrides.table}
-                {...child$Props}
-              />
-            );
-          })()}
-        </div>
+                        onRowClick: async (rowKey, row, event) => {
+                          const $steps = {};
+                          $steps["airtableUpdateById"] = true
+                            ? (() => {
+                                const actionArgs = {
+                                  dataOp: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "dataSourceOp",
+                                      interactionUuid: "Gn9hVMj68",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "dataOp"
+                                    },
+                                    () => ({
+                                      sourceId: "p7grtHiSaQSVmhAoysUCZR",
+                                      opId: "7218dc33-5341-4733-ae58-98d2ce2995bc",
+                                      userArgs: {
+                                        variables: ["false"],
+                                        id: [
+                                          $state.completeTable.selectedRow
+                                            .__airtable_id
+                                        ]
+                                      },
+                                      cacheKey: null,
+                                      invalidatedKeys: ["plasmic_refresh_all"],
+                                      roleId: null
+                                    })
+                                  )
+                                };
+                                return __wrapUserFunction(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "dataSourceOp",
+                                    interactionUuid: "Gn9hVMj68",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  () =>
+                                    (async ({ dataOp, continueOnError }) => {
+                                      try {
+                                        const response =
+                                          await executePlasmicDataOp(dataOp, {
+                                            userAuthToken:
+                                              dataSourcesCtx?.userAuthToken,
+                                            user: dataSourcesCtx?.user
+                                          });
+                                        if (
+                                          dataOp.invalidatedKeys &&
+                                          dataOp.invalidatedKeys.find(
+                                            key => key === "plasmic_refresh_all"
+                                          )
+                                        ) {
+                                          await Promise.all(
+                                            Array.from(cache.keys()).map(
+                                              async key => mutate(key)
+                                            )
+                                          );
+
+                                          return response;
+                                        }
+                                        if (dataOp.invalidatedKeys) {
+                                          await Promise.all(
+                                            dataOp.invalidatedKeys.map(
+                                              async invalidateKey =>
+                                                Promise.all(
+                                                  Array.from(cache.keys()).map(
+                                                    async key => {
+                                                      if (
+                                                        typeof key ===
+                                                          "string" &&
+                                                        key.includes(
+                                                          `.$.${invalidateKey}.$.`
+                                                        )
+                                                      ) {
+                                                        return mutate(key);
+                                                      }
+                                                      return Promise.resolve();
+                                                    }
+                                                  )
+                                                )
+                                            )
+                                          );
+                                        }
+                                        return response;
+                                      } catch (e) {
+                                        if (!continueOnError) {
+                                          throw e;
+                                        }
+                                        return e;
+                                      }
+                                    })?.apply(null, [actionArgs]),
+                                  actionArgs
+                                );
+                              })()
+                            : undefined;
+                          if (
+                            typeof $steps["airtableUpdateById"] === "object" &&
+                            typeof $steps["airtableUpdateById"].then ===
+                              "function"
+                          ) {
+                            $steps["airtableUpdateById"] =
+                              await __wrapUserPromise(
+                                {
+                                  type: "InteractionLoc",
+                                  actionName: "dataSourceOp",
+                                  interactionUuid: "Gn9hVMj68",
+                                  componentUuid: "jSrioS_Omt"
+                                },
+                                $steps["airtableUpdateById"]
+                              );
+                          }
+                        },
+                        onRowSelectionChanged: async (...eventArgs) => {
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRowKey",
+                            ["completeTable", "selectedRowKey"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRow",
+                            ["completeTable", "selectedRow"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRows",
+                            ["completeTable", "selectedRows"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRowKeys",
+                            ["completeTable", "selectedRowKeys"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                        },
+                        pageSize: 10 as const,
+                        pagination: false,
+                        rowActions: [],
+                        rowKey: (() => {
+                          try {
+                            return $state.task.value;
+                          } catch (e) {
+                            if (
+                              e instanceof TypeError ||
+                              e?.plasmicType === "PlasmicUndefinedDataError"
+                            ) {
+                              return undefined;
+                            }
+                            throw e;
+                          }
+                        })(),
+                        scopeClassName: sty["completeTable__instance"],
+                        selectedRowKey: p.generateStateValueProp($state, [
+                          "completeTable",
+                          "selectedRowKey"
+                        ]),
+                        selectedRowKeys: p.generateStateValueProp($state, [
+                          "completeTable",
+                          "selectedRowKeys"
+                        ]),
+                        themeResetClassName: classNames(
+                          projectcss.root_reset,
+                          projectcss.root_reset_tags,
+                          projectcss.plasmic_default_styles,
+                          projectcss.plasmic_mixins,
+                          projectcss.plasmic_tokens,
+                          plasmic_antd_5_hostless_css.plasmic_tokens,
+                          plasmic_plasmic_rich_components_css.plasmic_tokens
+                        )
+                      };
+                      p.initializeCodeComponentStates(
+                        $state,
+                        [
+                          {
+                            name: "selectedRowKey",
+                            plasmicStateName: "completeTable.selectedRowKey"
+                          },
+                          {
+                            name: "selectedRow",
+                            plasmicStateName: "completeTable.selectedRow"
+                          },
+                          {
+                            name: "selectedRows",
+                            plasmicStateName: "completeTable.selectedRows"
+                          },
+                          {
+                            name: "selectedRowKeys",
+                            plasmicStateName: "completeTable.selectedRowKeys"
+                          }
+                        ],
+                        [],
+                        RichTable_Helpers ?? {},
+                        child$Props
+                      );
+
+                      return (
+                        <RichTable
+                          data-plasmic-name={"completeTable"}
+                          data-plasmic-override={overrides.completeTable}
+                          {...child$Props}
+                        />
+                      );
+                    })()
+                  : null}
+                {true
+                  ? (() => {
+                      const child$Props = {
+                        canSelectRows: "none" as const,
+                        className: classNames("__wab_instance", sty.allTable),
+                        data: (() => {
+                          try {
+                            return $queries.allData.data;
+                          } catch (e) {
+                            if (
+                              e instanceof TypeError ||
+                              e?.plasmicType === "PlasmicUndefinedDataError"
+                            ) {
+                              return undefined;
+                            }
+                            throw e;
+                          }
+                        })(),
+                        defaultSize: "large" as const,
+                        fields: (() => {
+                          const __composite = [
+                            {
+                              key: "__airtable_id",
+                              fieldId: "__airtable_id",
+                              isHidden: null
+                            },
+                            {
+                              key: "Number",
+                              fieldId: "Number",
+                              dataType: null,
+                              maximumFractionDigits: null
+                            },
+                            {
+                              key: "Description",
+                              fieldId: "Description",
+                              dataType: null
+                            },
+                            {
+                              key: "Completed",
+                              fieldId: "Completed",
+                              dataType: null,
+                              showAs: null,
+                              title: null
+                            }
+                          ];
+                          __composite["0"]["isHidden"] = true;
+                          __composite["1"]["dataType"] = "number";
+                          __composite["1"]["maximumFractionDigits"] = 0;
+                          __composite["2"]["dataType"] = "string";
+                          __composite["3"]["dataType"] = "boolean";
+                          __composite["3"]["showAs"] = "switch";
+                          __composite["3"]["title"] = "Completed";
+                          return __composite;
+                        })(),
+
+                        onRowClick: async (rowKey, row, event) => {
+                          const $steps = {};
+                          $steps["airtableUpdateById"] = true
+                            ? (() => {
+                                const actionArgs = {
+                                  dataOp: __wrapUserFunction(
+                                    {
+                                      type: "InteractionArgLoc",
+                                      actionName: "dataSourceOp",
+                                      interactionUuid: "dNbJY3bwxD",
+                                      componentUuid: "jSrioS_Omt",
+                                      argName: "dataOp"
+                                    },
+                                    () => ({
+                                      sourceId: "p7grtHiSaQSVmhAoysUCZR",
+                                      opId: "6a643031-121e-415d-a28c-9e30066fe956",
+                                      userArgs: {
+                                        id: [rowKey]
+                                      },
+                                      cacheKey: null,
+                                      invalidatedKeys: ["plasmic_refresh_all"],
+                                      roleId: null
+                                    })
+                                  )
+                                };
+                                return __wrapUserFunction(
+                                  {
+                                    type: "InteractionLoc",
+                                    actionName: "dataSourceOp",
+                                    interactionUuid: "dNbJY3bwxD",
+                                    componentUuid: "jSrioS_Omt"
+                                  },
+                                  () =>
+                                    (async ({ dataOp, continueOnError }) => {
+                                      try {
+                                        const response =
+                                          await executePlasmicDataOp(dataOp, {
+                                            userAuthToken:
+                                              dataSourcesCtx?.userAuthToken,
+                                            user: dataSourcesCtx?.user
+                                          });
+                                        if (
+                                          dataOp.invalidatedKeys &&
+                                          dataOp.invalidatedKeys.find(
+                                            key => key === "plasmic_refresh_all"
+                                          )
+                                        ) {
+                                          await Promise.all(
+                                            Array.from(cache.keys()).map(
+                                              async key => mutate(key)
+                                            )
+                                          );
+
+                                          return response;
+                                        }
+                                        if (dataOp.invalidatedKeys) {
+                                          await Promise.all(
+                                            dataOp.invalidatedKeys.map(
+                                              async invalidateKey =>
+                                                Promise.all(
+                                                  Array.from(cache.keys()).map(
+                                                    async key => {
+                                                      if (
+                                                        typeof key ===
+                                                          "string" &&
+                                                        key.includes(
+                                                          `.$.${invalidateKey}.$.`
+                                                        )
+                                                      ) {
+                                                        return mutate(key);
+                                                      }
+                                                      return Promise.resolve();
+                                                    }
+                                                  )
+                                                )
+                                            )
+                                          );
+                                        }
+                                        return response;
+                                      } catch (e) {
+                                        if (!continueOnError) {
+                                          throw e;
+                                        }
+                                        return e;
+                                      }
+                                    })?.apply(null, [actionArgs]),
+                                  actionArgs
+                                );
+                              })()
+                            : undefined;
+                          if (
+                            typeof $steps["airtableUpdateById"] === "object" &&
+                            typeof $steps["airtableUpdateById"].then ===
+                              "function"
+                          ) {
+                            $steps["airtableUpdateById"] =
+                              await __wrapUserPromise(
+                                {
+                                  type: "InteractionLoc",
+                                  actionName: "dataSourceOp",
+                                  interactionUuid: "dNbJY3bwxD",
+                                  componentUuid: "jSrioS_Omt"
+                                },
+                                $steps["airtableUpdateById"]
+                              );
+                          }
+                        },
+                        onRowSelectionChanged: async (...eventArgs) => {
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRowKey",
+                            ["allTable", "selectedRowKey"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRow",
+                            ["allTable", "selectedRow"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRows",
+                            ["allTable", "selectedRows"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                          p.generateStateOnChangePropForCodeComponents(
+                            $state,
+                            "selectedRowKeys",
+                            ["allTable", "selectedRowKeys"],
+                            RichTable_Helpers
+                          ).apply(null, eventArgs);
+                        },
+                        pageSize: 10 as const,
+                        rowActions: [],
+                        scopeClassName: sty["allTable__instance"],
+                        selectedRowKey: p.generateStateValueProp($state, [
+                          "allTable",
+                          "selectedRowKey"
+                        ]),
+                        selectedRowKeys: p.generateStateValueProp($state, [
+                          "allTable",
+                          "selectedRowKeys"
+                        ]),
+                        themeResetClassName: classNames(
+                          projectcss.root_reset,
+                          projectcss.root_reset_tags,
+                          projectcss.plasmic_default_styles,
+                          projectcss.plasmic_mixins,
+                          projectcss.plasmic_tokens,
+                          plasmic_antd_5_hostless_css.plasmic_tokens,
+                          plasmic_plasmic_rich_components_css.plasmic_tokens
+                        )
+                      };
+                      p.initializeCodeComponentStates(
+                        $state,
+                        [
+                          {
+                            name: "selectedRowKey",
+                            plasmicStateName: "allTable.selectedRowKey"
+                          },
+                          {
+                            name: "selectedRow",
+                            plasmicStateName: "allTable.selectedRow"
+                          },
+                          {
+                            name: "selectedRows",
+                            plasmicStateName: "allTable.selectedRows"
+                          },
+                          {
+                            name: "selectedRowKeys",
+                            plasmicStateName: "allTable.selectedRowKeys"
+                          }
+                        ],
+                        [],
+                        RichTable_Helpers ?? {},
+                        child$Props
+                      );
+
+                      return (
+                        <RichTable
+                          data-plasmic-name={"allTable"}
+                          data-plasmic-override={overrides.allTable}
+                          {...child$Props}
+                        />
+                      );
+                    })()
+                  : null}
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
     </React.Fragment>
   ) as React.ReactElement | null;
@@ -923,34 +2151,64 @@ function PlasmicHomepage__RenderFunc(props: {
 const PlasmicDescendants = {
   root: [
     "root",
+    "column",
+    "freeBox",
     "navigationBar",
-    "link",
     "completed",
     "form",
     "task",
     "button",
-    "table"
+    "incompleteTable",
+    "completeTable",
+    "allTable"
   ],
-  navigationBar: ["navigationBar", "link", "completed"],
-  link: ["link"],
+  column: [
+    "column",
+    "freeBox",
+    "navigationBar",
+    "completed",
+    "form",
+    "task",
+    "button",
+    "incompleteTable",
+    "completeTable",
+    "allTable"
+  ],
+  freeBox: [
+    "freeBox",
+    "navigationBar",
+    "completed",
+    "form",
+    "task",
+    "button",
+    "incompleteTable",
+    "completeTable",
+    "allTable"
+  ],
+  navigationBar: ["navigationBar", "completed"],
   completed: ["completed"],
   form: ["form", "task", "button"],
   task: ["task"],
   button: ["button"],
-  table: ["table"]
+  incompleteTable: ["incompleteTable"],
+  completeTable: ["completeTable"],
+  allTable: ["allTable"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
   typeof PlasmicDescendants[T][number];
 type NodeDefaultElementType = {
   root: "div";
+  column: "div";
+  freeBox: "div";
   navigationBar: typeof NavigationBar;
-  link: "a";
   completed: "a";
   form: "form";
   task: typeof AntdTextArea;
   button: typeof AntdButton;
-  table: typeof RichTable;
+  incompleteTable: typeof RichTable;
+  completeTable: typeof RichTable;
+  allTable: typeof RichTable;
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -1013,13 +2271,16 @@ export const PlasmicHomepage = Object.assign(
   makeNodeComponent("root"),
   {
     // Helper components rendering sub-elements
+    column: makeNodeComponent("column"),
+    freeBox: makeNodeComponent("freeBox"),
     navigationBar: makeNodeComponent("navigationBar"),
-    link: makeNodeComponent("link"),
     completed: makeNodeComponent("completed"),
     form: makeNodeComponent("form"),
     task: makeNodeComponent("task"),
     button: makeNodeComponent("button"),
-    table: makeNodeComponent("table"),
+    incompleteTable: makeNodeComponent("incompleteTable"),
+    completeTable: makeNodeComponent("completeTable"),
+    allTable: makeNodeComponent("allTable"),
 
     // Metadata about props expected for PlasmicHomepage
     internalVariantProps: PlasmicHomepage__VariantProps,

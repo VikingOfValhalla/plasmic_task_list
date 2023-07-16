@@ -12,6 +12,7 @@
     "@plasmicpkgs/plasmic-basic-components": "^0.0.164",
     "@plasmicpkgs/plasmic-nav": "^0.0.123",
     "@plasmicpkgs/plasmic-rich-components": "^1.0.102",
+    "@plasmicpkgs/react-awesome-reveal": "^3.8.153",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
